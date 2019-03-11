@@ -18,7 +18,6 @@
           <!-- 一级菜单加号 -->
           <div class="menu_bottom menu_addicon" v-if="menuKeyLength < 3" @click="addMenu"><i class="el-icon-plus"></i></div>
         </div>
-      <el-button class="save_btn" type="success" @click="saveFun">保存并发布至菜单</el-button>
     </div>
     <!--右边配置-->
     <div v-if="!showRightFlag" class="right">
@@ -35,10 +34,10 @@
           <div class="menu_content">
             <span>菜单内容：</span>
             <el-radio-group v-model="tempObj.type">
-              <el-radio :label="'media_id'">发送素材</el-radio>
+              <!-- <el-radio :label="'media_id'">发送素材</el-radio> -->
               <el-radio :label="'view'">跳转链接</el-radio>
               <el-radio :label="'click'">发送关键词</el-radio>
-              <el-radio :label="'miniprogram'">小程序</el-radio>
+              <!-- <el-radio :label="'miniprogram'">小程序</el-radio> -->
             </el-radio-group>
           </div>
           <div class="configur_content">
@@ -107,15 +106,16 @@
 
 
       </div>
-      <div>menu对象值：{{menu}}</div>
+      <!-- <div>menu对象值：{{menu}}</div> -->
     </div>
     <!--一进页面就显示的默认页面，当点击左边按钮的时候，就不显示了-->
     <div v-if="showRightFlag" class="right">
        <p>请选择菜单配置</p>
     </div>
-
-
-
+    <div style="clear:both;"></div>
+    <div class="button-group">
+      <el-button class="save_btn" type="success" @click="saveFun">保存并发布至菜单</el-button>
+    </div>
   </div>
 </template>
 <script>
@@ -202,9 +202,19 @@
     },
     mounted() {
       // this.httpGetData();
-      this.mockMediaFun();
-      this.mockMenuFun();//模拟调取菜单数据
+      // this.mockMediaFun();
+      // this.mockMenuFun();//模拟调取菜单数据
 
+      // load from menu
+      // add sub_button key
+      menu.selfmenu_info.button.map(button => {
+        if(!button.sub_button){
+          button.sub_button = []  // add sub_button key
+        }
+        return button;
+      })
+
+      this.menu.button = menu.selfmenu_info.button;
     },
     filters:{
     },
@@ -243,6 +253,11 @@
       },
       saveFun(){
         console.log(this.menu);
+        this.$http.post('./menu', this.menu).then(res => {
+          alert('设置成功');
+        }).catch(error => {
+          alert('设置失败');
+        })
       },
       // 一级菜单点击事件
       menuFun(i, item){
@@ -354,7 +369,7 @@
       deleteMenu(obj){
         console.log(obj);
         var _this = this;
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        this.$confirm('确认删除当前菜单?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -399,8 +414,8 @@
     text-align: left;
   }
   .public-account-management{
-    min-width: 1200px;
-    width: 1200px;
+    // min-width: 1200px;
+    // width: 1200px;
     margin: 0 auto;
     .left{
       float: left;
@@ -466,16 +481,16 @@
           }
         }
       }
-      .save_btn{
-        position: absolute;
-        bottom: -50px;
-        left: 100px;
-      }
+      // .save_btn{
+      //   position: absolute;
+      //   bottom: -50px;
+      //   left: 100px;
+      // }
     }
     /*右边菜单内容*/
     .right{
       float: left;
-      width: 63%;
+      width: calc(96% - 350px);
       background-color: #e8e7e7;
       padding: 25px 10px 0px 20px;
       height: 710px;
@@ -513,6 +528,12 @@
         }
       }
 
+    }
+
+    .button-group {
+      margin-top: 5px;
+      display: flex;
+      justify-content: center;
     }
   }
 </style>
