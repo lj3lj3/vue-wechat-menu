@@ -42,7 +42,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
-    }
+    },
+    proxy: {
+      '/wechat': 'http://certification-print.loc/wechat'
+    },
   },
   plugins: [
     new webpack.DefinePlugin({
