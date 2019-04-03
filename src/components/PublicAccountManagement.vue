@@ -207,14 +207,16 @@
 
       // load from menu
       // add sub_button key
-      menu.selfmenu_info.button.map(button => {
+      // check if there is button of menu
+      let hasButton = typeof menu !== 'undefined' && menu.selfmenu_info && menu.selfmenu_info.button;
+      hasButton && menu.selfmenu_info.button.map(button => {
         if(!button.sub_button){
           button.sub_button = []  // add sub_button key
         }
         return button;
       })
 
-      this.menu.button = menu.selfmenu_info.button;
+      hasButton && (this.menu.button = menu.selfmenu_info.button)
     },
     filters:{
     },
