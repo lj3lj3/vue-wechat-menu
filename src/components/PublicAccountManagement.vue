@@ -287,83 +287,27 @@
       },
       // 添加横向一级菜单
       addMenu(){
-        // 先判断1，再判断2,对象增加，会进行往下计算，所以必须先判断2，再判断1
-        if(this.menuKeyLength == 2){
-          this.$set(this.menu.button,"2",
-            {
-              // type: "",
-              name: "菜单3",
-              // url: "",//跳转链接
-              // media_id:"",//素材名称--图文消息
-              sub_button: []
-            }
-          );
-        }
-        if(this.menuKeyLength == 1){
-          this.$set(this.menu.button,"1",
-            {
-              // type: "",
-              name: "菜单2",
-              // url: "",//跳转链接
-              // media_id:"",//素材名称--图文消息
-              sub_button: []
-            }
-          );
-        }
+        this.$set(this.menu.button, this.menuKeyLength,
+          {
+            // type: "",
+            name: "菜单",
+            // url: "",//跳转链接
+            // media_id:"",//素材名称--图文消息
+            sub_button: []
+          }
+        );
       },
       // 添加横向二级菜单
       addSubMenu(item){
-        let subMenuKeyLength = item.sub_button.length;//获取二级菜单key长度
-        if(subMenuKeyLength == 4){
-          this.$set(item.sub_button,"4",
-            {
-              // type: "",
-              name: "子菜单5",
-              // url: "",//跳转链接
-              // media_id:"",//素材名称--图文消息
-            }
-          );
-        }
-        if(subMenuKeyLength == 3){
-          this.$set(item.sub_button,"3",
-            {
-              // type: "",
-              name: "子菜单4",
-              // url: "",//跳转链接
-              // media_id:"",//素材名称--图文消息
-            }
-          );
-        }
-        if(subMenuKeyLength == 2){
-          this.$set(item.sub_button,"2",
-            {
-              // type: "",
-              name: "子菜单3",
-              // url: "",//跳转链接
-              // media_id:"",//素材名称--图文消息
-            }
-          );
-        }
-        if(subMenuKeyLength == 1){
-          this.$set(item.sub_button,"1",
-            {
-              // type: "",
-              name: "子菜单2",
-              // url: "",//跳转链接
-              // media_id:"",//素材名称--图文消息
-            }
-          );
-        }
-        if(subMenuKeyLength == 0){
-            this.$set(item.sub_button,"0",
-              {
-                // type: "",
-                name: "子菜单1",
-                // url: "",//跳转链接
-                // media_id:"",//素材名称--图文消息
-              }
-            );
-        }
+        //获取二级菜单key长度
+        this.$set(item.sub_button, item.sub_button.length,
+          {
+            // type: "",
+            name: "子菜单",
+            // url: "",//跳转链接
+            // media_id:"",//素材名称--图文消息
+          }
+        );
       },
       //删除当前菜单
       deleteMenu(obj){
